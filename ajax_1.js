@@ -73,3 +73,40 @@ btnAddPost.addEventListener('click', (e) => {
     container.insertAdjacentElement('afterbegin', card);
   });
 });
+
+const myHttpRequest = ({ method, url } = {}, cb) => {
+  try {
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+    xhr.addEventListener('load', () => {
+      if (Math.floor(xhr.status / 100) !== 2) {
+        cb(`error. Status cide:${xhr.status}`, xhr);
+        return;
+      }
+      const response = JSON.parse(xhr.responseText);
+      cb(null, response);
+    });
+
+    xhr.addEventListener('error', () => {
+      cb(`error. Status cide:${xhr.status}`, xhr);
+    });
+
+    xhr.send();
+  } catch (error) {
+    cb(error);
+  }
+};
+
+myHttpRequest(
+  {
+    method: 'GET',
+    url: 'https://jsonplaceholder.typicode.com/posts',
+  },
+  (err, res) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log(res);
+  }
+);
