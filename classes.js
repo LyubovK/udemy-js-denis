@@ -31,3 +31,30 @@ class Product {
 
 const newProduct = new Product('Samsung', 200, 10);
 console.log(newProduct);
+
+// наследование
+
+class User {
+  constructor(firstName, lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  getFullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+}
+
+class Customer extends User {
+  constructor(firstName, lastName, memberShip) {
+    super(firstName, lastName);
+    this.memberShip = memberShip;
+  }
+  getFullName() {
+    const parentRes = super.getFullName();
+    return `Hello ${this.firstName} ${this.lastName} - ${this.memberShip}`;
+  }
+}
+
+const customer = new Customer('Liuba', 'Kytsenko', 'basic');
+console.log(customer.getFullName());
